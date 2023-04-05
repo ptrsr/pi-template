@@ -1,0 +1,22 @@
+---
+- hosts: raspi
+  gather_facts: no
+  tasks:
+  - name: Shutdown vm
+    shell: shutdown now
+    become: true
+    async: 1
+    poll: 0
+
+- hosts: local
+  connection: local
+  gather_facts: no
+  tasks:
+  - name: Wait for shutdown
+    pause:
+      seconds: 10
+    
+  - name: Stop raspi container
+    docker_container:
+      name: raspi
+      state: absent
