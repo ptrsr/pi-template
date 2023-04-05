@@ -11,6 +11,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Install Ansible
+        run: apt-get update && apt install -y ansible
+
       - name: Run test
         run: |
           ansible-playbook \
