@@ -1,0 +1,41 @@
+name: PI-TEMPLATE
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    container: 
+      image: ptrsr/pi-ci
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      #   - name: Run PI-CI
+        
+
+  # test:
+  #   needs: build
+  #   runs-on: ubuntu-20.04
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
+
+
+  #     - name: Install dependencies
+  #       run: |
+  #         sudo apt-get install ansible
+  #         pip3 install docker-py
+
+  #     - name: Run test
+  #       run: |
+  #         ansible-playbook \
+  #         -i test/hosts.yml \
+  #         test/main.yml
+
+  #     - uses: actions/upload-artifact@v2
+  #       with:
+  #         name: config
+  #         path: dist
+
+  # publish:
