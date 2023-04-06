@@ -5,22 +5,26 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
       - name: Load Docker image
-        run: docker pull ptrsr/pi-ci
+        run: docker pull ptrsr/pi-ci:0.5
 
       - name: Install dependencies
         run: pip3 install docker-py
 
-      - name: Run test
+      - name: Configure image
         run: |
           ansible-playbook \
           -i .pi-ci/hosts.yml \
           .pi-ci/init.yml
 
-      - uses: actions/upload-artifact@v3
+      - name: Export image
+        run: docker run -i --rm -v $GITHUB_WORKSPACE/dist/:/dist ptrsr/pi-ci:0.5 export -o /dist/distro.img
+
+      - name: Upload image
+        uses: actions/upload-artifact@v3
         with:
-          name: config
-          path: dist/distro.qcow2
+          name: distro.zip
+          path: dist/distro.img
