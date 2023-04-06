@@ -18,4 +18,9 @@ jobs:
         run: |
           ansible-playbook \
           -i .pi-ci/hosts.yml \
-          .pi-ci/main.yml
+          .pi-ci/init.yml
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: config
+          path: dist/distro.qcow2

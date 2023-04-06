@@ -1,0 +1,7 @@
+---
+- hosts: raspi
+  gather_facts: no
+
+  tasks:
+  - name: "Execute main shell script"
+    shell: ./template/main.sh > log.txt

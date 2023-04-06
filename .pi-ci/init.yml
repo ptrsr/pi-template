@@ -4,14 +4,17 @@
   gather_facts: no
   tasks:
   - set_fact:
-      main_dir: "{{ playbook_dir }}"
+      main_dir: "{{ playbook_dir }}/.."
       dist_dir: "{{ playbook_dir }}/../dist"
 
-# # Start raspi vm machine
+# Start raspi vm
 - import_playbook: host/start.yml
 
-# # Execute test on raspi
-- import_playbook: raspi/test.yml
+# Execute setup on raspi
+- import_playbook: raspi/setup.yml
 
-# Stop raspi vm machine
+# Execute main config on raspi
+- import_playbook: ../main.yml
+
+# Stop raspi vm
 - import_playbook: host/stop.yml

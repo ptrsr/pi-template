@@ -1,6 +1,0 @@
----
-- hosts: raspi
-  tasks:
-  - name: Print test message
-    debug:
-      msg: Hello, world!
