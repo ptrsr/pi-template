@@ -27,8 +27,12 @@ It is also possible to run the VM locally, but it requires some software to be i
 
 **NOTE**: Linux and Mac are supported, Windows through [WSL](https://learn.microsoft.com/en-us/windows/wsl/install).
 
+## Usage
+Both **Ansible** and **Shell Script** can be used to configure the image. See `main.yml` and `main.sh`.
+The current setup creates a `log.txt` file in the `pi` user's home directory with `Hello, Raspi!`.
+
 ## Versions
-Built and tested on `Ubuntu 22.04` (WSL), but should work with the following versions;
+Built and tested locally on `Ubuntu 22.04` (WSL), and should work with the following minimum versions;
 | Software  | Version  | 
 | ----------| -------- |
 | Ansible   | 2.5.1    |

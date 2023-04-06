@@ -21,7 +21,7 @@ jobs:
           .pi-ci/init.yml
 
       - name: Export image
-        run: docker run -i --rm -v dist/:/dist/ ptrsr/pi-ci:0.5 export -o /dist/distro.img
+        run: docker run -i --rm -v $GITHUB_WORKSPACE/dist/:/dist ptrsr/pi-ci:0.5 export -o /dist/distro.img
 
       - name: Upload image
         uses: actions/upload-artifact@v3
