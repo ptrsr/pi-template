@@ -9,6 +9,13 @@
       path: ~/.ssh/id_rsa.pub
     register: ssh_key
 
+  - name: Create ssh folder
+    become: true
+    become_user: "{{ account.username }}"
+    file:
+      path: /home/{{ account.username }}/.ssh
+      state: directory
+
   - name: Generate an OpenSSH keypair
     when: "not ssh_key.stat.exists"
     openssh_keypair:
@@ -26,9 +33,6 @@
     failed_when: false
     changed_when: 
       - result.msg is not defined
-
-  - debug:
-      var: result
 
   - name: Skip if initial account does not exist anymore
     meta: end_play
