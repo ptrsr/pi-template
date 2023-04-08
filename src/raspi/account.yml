@@ -1,0 +1,90 @@
+---
+- hosts: local
+  connection: local
+  gather_facts: no
+
+  tasks:
+  - name: Check if OpenSSH keypair exists
+    stat:
+      path: ~/.ssh/id_rsa.pub
+    register: ssh_key
+
+  - name: Generate an OpenSSH keypair
+    when: "not ssh_key.stat.exists"
+    openssh_keypair:
+      path: ~/.ssh/id_rsa
+
+
+- hosts: init
+  gather_facts: no
+
+  tasks:
+  - name: Check if initial account exists
+    wait_for_connection:
+      timeout: 1
+    register: result
+    failed_when: false
+    changed_when: 
+      - result.msg is not defined
+
+  - debug:
+      var: result
+
+  - name: Skip if initial account does not exist anymore
+    meta: end_play
+    when: result.changed == false
+
+  - name: Add ACL library for changing user
+    become: true
+    apt:
+      name: acl
+
+  - name: Add user account
+    become: true
+    user:
+      name: "{{ account.username }}"
+      password: "{{ account.password }}"
+
+  - name: Create ssh folder
+    become: true
+    become_user: "{{ account.username }}"
+    file:
+      path: /home/{{ account.username }}/.ssh
+      state: directory
+
+  - name: Add public SSH key to new account
+    become: true
+    become_user: "{{ account.username }}"
+    synchronize:
+      src: ~/.ssh/id_rsa.pub
+      dest: /home/{{ account.username }}/.ssh/authorized_keys
+
+  - name: Add user to sudoers
+    become: true
+    community.general.sudoers:
+      name: $USERS
+      state: present
+      user: "{{ account.username }}"
+      commands: ALL
+
+  - name: Set new SSH username
+    set_fact:
+      ansible_ssh_user: "{{ account.username }}"
+
+
+- hosts: raspi
+  gather_facts: no
+
+  tasks:
+  - name: Logout pi user
+    become: true
+    shell: killall -u pi
+    failed_when: false
+    changed_when: false
+
+  - name: Remove old user account
+    become: true
+    user:
+      name: pi
+      state: absent
+      remove: true

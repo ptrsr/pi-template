@@ -1,6 +1,7 @@
 ---
 - hosts: raspi
   gather_facts: no
+
   tasks:
   - name: Shutdown vm
     shell: shutdown now
@@ -8,9 +9,11 @@
     async: 1
     poll: 0
 
+
 - hosts: local
   connection: local
   gather_facts: no
+  
   tasks:
   - name: Wait for shutdown
     pause:

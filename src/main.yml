@@ -1,0 +1,16 @@
+---
+# Start raspi vm
+- import_playbook: host/start.yml
+  when: main.start == true
+
+
+# Setup account
+- import_playbook: raspi/account.yml
+
+# Copy template
+- import_playbook: raspi/template.yml
+
+
+# Stop raspi vm
+- import_playbook: host/stop.yml
+  when: main.stop == true

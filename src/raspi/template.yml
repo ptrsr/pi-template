@@ -1,0 +1,13 @@
+---
+- hosts: raspi
+  gather_facts: no
+
+  tasks:
+  - name: Synchronize this template repo with raspi
+    synchronize:
+      src: "{{ host.main_dir }}"
+      dest: "/home/{{ account.username }}/template"
+      delete: true
+      recursive: true
+      rsync_opts:
+        - "--exclude=dist"
