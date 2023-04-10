@@ -6,21 +6,20 @@
   tasks:
   - name: Check if OpenSSH keypair exists
     stat:
-      path: ~/.ssh/id_rsa.pub
+      path: "{{ account.ssh.path }}"
     register: ssh_key
+    failed_when: ssh_key.stat.exists == false and account.ssh.generate == false
 
   - name: Create ssh folder
-    become: true
-    become_user: "{{ account.username }}"
     file:
-      path: /home/{{ account.username }}/.ssh
+      path: "{{ account.ssh.path | dirname }}"
       state: directory
 
   - name: Generate an OpenSSH keypair
-    when: "not ssh_key.stat.exists"
+    when: account.ssh.generate == true and not ssh_key.stat.exists
     openssh_keypair:
-      path: ~/.ssh/id_rsa
-
+      mode: 0600
+      path: "{{ account.ssh.path }}"
 
 - hosts: init
   gather_facts: no
@@ -35,8 +34,8 @@
       - result.msg is not defined
 
   - name: Skip if initial account does not exist anymore
-    meta: end_play
     when: result.changed == false
+    meta: end_play
 
   - name: Add ACL library for changing user
     become: true
@@ -60,7 +59,7 @@
     become: true
     become_user: "{{ account.username }}"
     synchronize:
-      src: ~/.ssh/id_rsa.pub
+      src: "{{ account.ssh.path }}.pub"
       dest: /home/{{ account.username }}/.ssh/authorized_keys
 
   - name: Add user to sudoers

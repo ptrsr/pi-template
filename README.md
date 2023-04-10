@@ -23,7 +23,11 @@ It is also possible to run the VM locally, but it requires some software to be i
 - Install `pip3`.
 - Install `docker-py` pip module.
 - Start `docker` service.
-- Run `./tools/virtual.sh`.
+
+To run the project locally, run:
+```sh
+./run.sh virtual custom main
+```
 
 **NOTE**: Linux and Mac are supported, Windows through [WSL](https://learn.microsoft.com/en-us/windows/wsl/install).
 

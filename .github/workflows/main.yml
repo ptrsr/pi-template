@@ -17,9 +17,9 @@ jobs:
       - name: Configure image
         run: |
           ansible-playbook \
-          -i conf/hosts.yml \
+          -i inv/virtual.yml \
           src/main.yml \
-          --extra-vars "@conf/vars.yml" \
+          --extra-vars "@conf/ci.yml" \
 
       - name: Export image
         run: docker run -i --rm -v $GITHUB_WORKSPACE/dist/:/dist ptrsr/pi-ci:0.5 export -o /dist/distro.img

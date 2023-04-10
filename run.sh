@@ -1,3 +1,3 @@
 #!/bin/sh
 PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)/"
-ansible-playbook -v -i $PROJECT_DIR/conf/hosts.yml $PROJECT_DIR/src/$2.yml --extra-vars @conf/$1.yml
+ansible-playbook -i $PROJECT_DIR/inv/$1.yml $PROJECT_DIR/src/$3.yml --extra-vars @conf/$2.yml

@@ -1,0 +1,16 @@
+main:
+  start: true
+  stop: true
+
+host:
+  main_dir: "{{ inventory_dir }}/.."
+  dist_dir: "{{ inventory_dir }}/../dist"
+
+account:
+  username: test-user
+  # Generated using 'mkpasswd --method=sha-512' command, example is 'test-password'
+  password: $6$scQ3iIF66Udc3$ukCdSpCoUWGOd8yW8l2GTGg0NsdcFSlCQPAGZMo44RhrazS5iOVtNZm7I392RxsyMFUBm5K5biU0Y2SkUcLK.0
+  ssh:
+    generate: true
+    path: "{{ inventory_dir }}/../ssh/id_rsa"
+  
