@@ -5,6 +5,7 @@ main:
 host:
   main_dir: "{{ inventory_dir }}/.."
   dist_dir: "{{ inventory_dir }}/../dist"
+  size: 4G
 
 account:
   username: test-user

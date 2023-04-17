@@ -1,0 +1,20 @@
+---
+- hosts: local
+  connection: local
+  gather_facts: no
+  vars:
+    skip: false
+
+  tasks:
+  - name: Resize raspi machine
+    docker_container:
+      name: raspi
+      image: ptrsr/pi-ci
+      command: resize -y {{ host.size }}
+      state: started
+      detach: false
+      tls_hostname: localhost
+      published_ports:
+        - 2222:2222
+      volumes:
+        - "{{ host.dist_dir|default(omit) }}:/dist"
