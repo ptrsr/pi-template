@@ -4,11 +4,11 @@
   gather_facts: no
 
   tasks:
-  - name: Resize raspi machine
+  - name: Initialize raspi machine
     docker_container:
       name: raspi
       image: ptrsr/pi-ci
-      command: resize -y {{ host.size }}
+      command: init
       state: started
       detach: false
       tls_hostname: localhost

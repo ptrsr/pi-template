@@ -1,15 +1,23 @@
 ---
+# Instantiate vm image
+- import_playbook: host/init.yml
+  when: main.prepare == true
+
+# Resize vm image
+- import_playbook: host/resize.yml
+  when: main.prepare == true
+
 # Start raspi vm
 - import_playbook: host/start.yml
   when: main.start == true
 
-
+# ----- configure raspi -----
 # Setup account
 - import_playbook: raspi/account.yml
 
 # Copy template
 - import_playbook: raspi/template.yml
-
+# ---------------------------
 
 # Stop raspi vm
 - import_playbook: host/stop.yml

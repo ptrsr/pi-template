@@ -1,6 +1,9 @@
 name: PI-TEMPLATE
 on: [push]
 
+env:
+  PI_CI: ptrsr/pi-ci:0.6
+
 jobs:
   build:
     runs-on: ubuntu-20.04
@@ -9,7 +12,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Load Docker image
-        run: docker pull ptrsr/pi-ci:0.5
+        run: docker pull $PI_CI
 
       - name: Install dependencies
         run: pip3 install docker-py
@@ -22,7 +25,7 @@ jobs:
           --extra-vars "@conf/ci.yml" \
 
       - name: Export image
-        run: docker run -i --rm -v $GITHUB_WORKSPACE/dist/:/dist ptrsr/pi-ci:0.5 export -o /dist/distro.img
+        run: docker run -i --rm -v $GITHUB_WORKSPACE/dist/:/dist $PI_CI export -o /dist/distro.img
 
       - name: Upload image
         uses: actions/upload-artifact@v3

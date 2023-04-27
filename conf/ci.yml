@@ -1,4 +1,5 @@
 main:
+  prepare: true
   start: true
   stop: true
 
