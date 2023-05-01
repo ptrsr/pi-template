@@ -1,0 +1,3 @@
+---
+# Setup account
+- import_playbook: setup/account.yml

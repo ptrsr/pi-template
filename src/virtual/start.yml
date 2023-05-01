@@ -6,7 +6,7 @@
     skip: false
 
   tasks:
-  - name: Start raspi machine
+  - name: start raspi machine
     docker_container:
       name: raspi
       image: ptrsr/pi-ci
@@ -19,13 +19,13 @@
         - "{{ host.dist_dir|default(omit) }}:/dist"
     register: startup
 
-  - name: Wait for container to warm up
+  - name: wait for container to warm up
     pause:
       seconds: 10
     when:
       - startup.changed == true
 
-  - name: Wait for machine start up
+  - name: wait for machine start up
     shell: curl localhost:2222
     failed_when: false
     changed_when: false

@@ -6,7 +6,7 @@
   - name: Synchronize this template repo with raspi
     synchronize:
       src: "{{ host.main_dir }}"
-      dest: "/home/{{ account.username }}/template"
+      dest: "~/"
       delete: true
       recursive: true
       rsync_opts:

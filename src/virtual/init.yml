@@ -4,7 +4,7 @@
   gather_facts: no
 
   tasks:
-  - name: Initialize raspi machine
+  - name: initialize raspi machine
     docker_container:
       name: raspi
       image: ptrsr/pi-ci

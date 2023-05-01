@@ -1,0 +1,21 @@
+---
+# Instantiate vm image
+- import_playbook: virtual/init.yml
+
+# Resize vm image
+- import_playbook: virtual/resize.yml
+
+# Start raspi vm
+- import_playbook: virtual/start.yml
+
+# ----- configure raspi -----
+# Copy template
+- import_playbook: setup/template.yml
+
+# Install Ansible
+- import_playbook: setup/ansible.yml
+
+# ---------------------------
+
+# Stop raspi vm
+- import_playbook: virtual/stop.yml

@@ -2,7 +2,7 @@ name: PI-TEMPLATE
 on: [push]
 
 env:
-  PI_CI: ptrsr/pi-ci:0.6
+  PI_CI: ptrsr/pi-ci:0.7
 
 jobs:
   build:
@@ -20,12 +20,14 @@ jobs:
       - name: Configure image
         run: |
           ansible-playbook \
-          -i inv/virtual.yml \
-          src/main.yml \
-          --extra-vars "@conf/ci.yml" \
+          -i inv/ci.yml \
+          src/ci.yml
 
       - name: Export image
-        run: docker run -i --rm -v $GITHUB_WORKSPACE/dist/:/dist $PI_CI export -o /dist/distro.img
+        run: |
+          docker run -i --rm \
+          -v $GITHUB_WORKSPACE/dist/:/dist \
+          $PI_CI export -o /dist/distro.img
 
       - name: Upload image
         uses: actions/upload-artifact@v3

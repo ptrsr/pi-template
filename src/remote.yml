@@ -1,0 +1,29 @@
+---
+- hosts: localhost
+  vars_prompt:
+    - name: remote_host
+      prompt: What is the remote hostname or IP address?
+      private: false
+
+  tasks:
+  - name: add remote host to inventory
+    add_host:
+      name: raspi
+      ansible_host: "{{ remote_host }}"
+      ansible_user: root
+      ansible_ssh_common_args: '-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+
+# Copy template
+- import_playbook: setup/template.yml
+
+# # Setup account
+# - import_playbook: setup/account.yml
+
+# # Setup SSH
+# - import_playbook: setup/ssh.yml
+
+# Debug print host ip
+
+  # tasks:
+  # - debug:
+  #     msg: "{{ hostvars.raspi.ansible_host }}"

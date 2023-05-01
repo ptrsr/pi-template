@@ -1,0 +1,40 @@
+---
+- hosts: local
+  connection: local
+  gather_facts: no
+
+  tasks:
+  - name: check if OpenSSH keypair exists
+    stat:
+      path: "{{ account.ssh.path }}"
+    register: ssh_key
+    failed_when: ssh_key.stat.exists == false and account.ssh.generate == false
+
+  - name: create ssh folder
+    file:
+      path: "{{ account.ssh.path | dirname }}"
+      state: directory
+
+  - name: generate an OpenSSH keypair
+    when: account.ssh.generate == true and not ssh_key.stat.exists
+    openssh_keypair:
+      mode: 0600
+      path: "{{ account.ssh.path }}"
+
+- hosts: raspi
+  gather_facts: no
+
+  tasks:
+  - name: create ssh folder
+    become: true
+    become_user: "{{ account.username }}"
+    file:
+      path: /home/{{ account.username }}/.ssh
+      state: directory
+
+  - name: add public SSH key to new account
+    become: true
+    become_user: "{{ account.username }}"
+    synchronize:
+      src: "{{ account.ssh.path }}.pub"
+      dest: /home/{{ account.username }}/.ssh/authorized_keys

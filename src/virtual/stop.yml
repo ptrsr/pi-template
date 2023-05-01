@@ -3,7 +3,7 @@
   gather_facts: no
 
   tasks:
-  - name: Shutdown vm
+  - name: shutdown vm
     shell: shutdown now
     become: true
     async: 1
@@ -15,11 +15,11 @@
   gather_facts: no
   
   tasks:
-  - name: Wait for shutdown
+  - name: wait for shutdown
     pause:
       seconds: 10
     
-  - name: Stop raspi container
+  - name: stop raspi container
     docker_container:
       name: raspi
       state: absent
