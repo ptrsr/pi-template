@@ -16,14 +16,5 @@
 # Copy template
 - import_playbook: setup/template.yml
 
-# # Setup account
-# - import_playbook: setup/account.yml
-
-# # Setup SSH
-# - import_playbook: setup/ssh.yml
-
-# Debug print host ip
-
-  # tasks:
-  # - debug:
-  #     msg: "{{ hostvars.raspi.ansible_host }}"
+# Setup SSH
+- import_playbook: setup/ssh.yml

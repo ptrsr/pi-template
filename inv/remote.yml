@@ -13,4 +13,8 @@ all:
       main_dir: "{{ inventory_dir }}/.."
       dist_dir: "{{ inventory_dir }}/../dist"
       data_dir: "{{ inventory_dir }}/../data"
-      size: 4G
+
+    ssh:
+      path: "{{ host.main_dir }}/ssh/id_rsa"
+      generate: true
+      
