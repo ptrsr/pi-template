@@ -15,7 +15,9 @@ jobs:
         run: docker pull $PI_CI
 
       - name: Install dependencies
-        run: pip3 install docker-py
+        run: |
+          sudo apt-get install ansible
+          pip3 install docker-py
 
       - name: Configure image
         run: |
