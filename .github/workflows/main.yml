@@ -19,7 +19,7 @@ jobs:
 
       - name: Configure image
         run: |
-          ansible-playbook \
+          ansible-playbook -v \
           -i inv/ci.yml \
           src/ci.yml
 
