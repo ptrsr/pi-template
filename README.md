@@ -1,20 +1,21 @@
 # PI-TEMPLATE
 A template repo for [PI-CI](https://github.com/ptrsr/pi-ci): fork me for automated RPi builds!
 
-This repository uses Github Actions to run tasks in a Raspberry Pi VM. The VM image is then uploaded as an artifact, ready to be flashed to an SD card and used by a real RPi.
-Every commit represents a snapshot of a RPi configuration, resulting in reproducible images. This approach provides multiple advantages;
+This repository uses Github Actions to prepare Raspberry Pi images, enabling [configurations to be defined as code](https://www.redhat.com/en/topics/automation/what-is-infrastructure-as-code-iac) through Ansible.
+Every commit represents a snapshot of a RPi configuration, that can be reproduced by flashing the image on an SD card and running the included Ansible playbook (that is defined in this repo).
 
-- No more need to create back-ups of SD cards
-- Easily share images
 - Create images that work from first boot
-- keep track of difficult configurations (such as servers)
-- Allows going back to older versions (if the newer one has problemsz)
+- No more need to create back-ups of SD cards
+- Keep track of difficult configurations
+- Returning to an older version
+- Easily share configurations
 
-## Prerequisites
-Forking and pushing this repo on GitHub will automatically enable and run the actions out of the box!
+## Usage
+Flash the image provided in this repo as a demo! After flashing, log in as root (no password need) and run `./run.sh local`. The script will setup the environment defined in the `./inv/local.yml` inventory file. After the configuration is done, you can log in using `test-user` and `test-password`.
+Forking this repo on GitHub will automatically enable and run the actions out of the box for your own, custom configuration.
 
-### Local
-It is also possible to run the VM locally, but it requires some software to be installed. To do so;
+### Pipeline
+It is also possible to run the configuration pipeline locally, but it requires some software to be installed. To do so;
 - Clone this repo.
 - Have this repo as current working directory.
 - Install `docker`.
@@ -26,14 +27,10 @@ It is also possible to run the VM locally, but it requires some software to be i
 
 To run the project locally, run:
 ```sh
-./run.sh virtual custom main
+./run.sh ci
 ```
 
 **NOTE**: Linux and Mac are supported, Windows through [WSL](https://learn.microsoft.com/en-us/windows/wsl/install).
-
-## Usage
-Both **Ansible** and **Shell Script** can be used to configure the image. See `main.yml` and `main.sh`.
-The current setup creates a `log.txt` file in the `pi` user's home directory with `Hello, Raspi!`.
 
 ## Versions
 Built and tested locally on `Ubuntu 22.04` (WSL), and should work with the following minimum versions;

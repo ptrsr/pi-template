@@ -29,3 +29,7 @@
     shell: curl localhost:2222
     failed_when: false
     changed_when: false
+
+  - name: wait for container to warm up
+    pause:
+      seconds: 10

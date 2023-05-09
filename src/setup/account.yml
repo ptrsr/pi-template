@@ -30,3 +30,9 @@
       regexp: '^PermitEmptyPasswords yes'
       line: 'PermitEmptyPasswords no'
       state: present
+
+  - name: restart SSH daemon
+    service:
+      name: ssh
+      state: restarted
+    when: account.apply == true

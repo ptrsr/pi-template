@@ -15,6 +15,11 @@ all:
       data_dir: "{{ inventory_dir }}/../data"
 
     ssh:
-      path: "{{ host.main_dir }}/ssh/id_rsa"
+      path: "~/ssh/id_rsa"
       generate: true
-      
+
+    account:
+      username: test-user
+      # Generated using 'mkpasswd --method=sha-512' command, example is 'test-password'
+      password: $6$scQ3iIF66Udc3$ukCdSpCoUWGOd8yW8l2GTGg0NsdcFSlCQPAGZMo44RhrazS5iOVtNZm7I392RxsyMFUBm5K5biU0Y2SkUcLK.0
+      apply: false

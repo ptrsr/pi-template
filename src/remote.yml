@@ -16,5 +16,8 @@
 # Copy template
 - import_playbook: setup/template.yml
 
+# Setup account
+- import_playbook: setup/account.yml
+
 # Setup SSH
-- import_playbook: setup/ssh.yml
+- import_playbook: setup/keypair.yml
