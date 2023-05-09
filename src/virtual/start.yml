@@ -19,17 +19,9 @@
         - "{{ host.dist_dir|default(omit) }}:/dist"
     register: startup
 
-  - name: wait for container to warm up
-    pause:
-      seconds: 10
-    when:
-      - startup.changed == true
-
-  - name: wait for machine start up
-    shell: curl localhost:2222
-    failed_when: false
-    changed_when: false
-
-  - name: wait for container to warm up
-    pause:
-      seconds: 10
+- hosts: raspi
+  gather_facts: no
+  tasks:
+  - name: wait for machine startup
+    wait_for_connection:
+      timeout: 600
