@@ -1,6 +1,7 @@
 ---
 - hosts: raspi
   gather_facts: no
+
   tasks:
   - name: synchronize this template repo with raspi
     become: true

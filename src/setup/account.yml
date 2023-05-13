@@ -3,6 +3,13 @@
   gather_facts: no
 
   tasks:
+- name: remove user pi
+    become: true
+    user:
+      name: pi
+      state: absent
+      remove: yes
+
   - name: add user account
     become: true
     user:

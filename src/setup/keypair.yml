@@ -21,6 +21,7 @@
       mode: 0600
       path: "{{ ssh.path }}"
 
+
 - hosts: raspi
   gather_facts: no
 

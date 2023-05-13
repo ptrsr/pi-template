@@ -6,7 +6,6 @@ all:
       ansible_user: root
       ansible_ssh_common_args: '-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
 
-
   vars:
     host:
       main_dir: "{{ inventory_dir }}/.."

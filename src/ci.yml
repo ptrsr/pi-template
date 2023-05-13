@@ -16,6 +16,5 @@
 - import_playbook: setup/ansible.yml
 
 # ---------------------------
-
 # Stop raspi vm
 - import_playbook: virtual/stop.yml
