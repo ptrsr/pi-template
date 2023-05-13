@@ -1,10 +1,12 @@
 ---
 - hosts: raspi
+  gather_facts: no
   tasks:
-  - name: Synchronize this template repo with raspi
+  - name: synchronize this template repo with raspi
+    become: true
     synchronize:
       src: "{{ host.main_dir }}"
-      dest: "~/"
+      dest: "{{ template.dir }}"
       delete: true
       recursive: true
       rsync_opts:

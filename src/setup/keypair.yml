@@ -26,18 +26,22 @@
 
   tasks:
   - name: create ssh folder
-    become_user: "{{ account.username }}"
     file:
       path: /home/{{ account.username }}/.ssh
       state: directory
 
   - name: add public SSH key to new account
-    become_user: "{{ account.username }}"
     synchronize:
       src: "{{ ssh.path }}.pub"
       dest: /home/{{ account.username }}/.ssh/authorized_keys
 
+  - name: change owner of ssh folder
+    file:
+      path: /home/{{ account.username }}/.ssh
+      state: directory
+      recurse: yes
+      owner: "{{ account.username }}"
+
   - name: restart SSH daemon
-    service:
-      name: ssh
-      state: restarted
+    become: true
+    shell: systemctl restart sshd

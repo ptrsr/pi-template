@@ -1,23 +1,37 @@
 ---
-- hosts: localhost
+- hosts: raspi
+  gather_facts: no
   vars_prompt:
-    - name: remote_host
-      prompt: What is the remote hostname or IP address?
-      private: false
+  - name: ansible_host
+    prompt: Remote host address?
+    private: no
+
 
   tasks:
+  - name: check if remote host is reachable
+    wait_for_connection:
+      timeout: 5
+    register: user_reachable
+    failed_when: false
+    changed_when: user_reachable is failed
+  
   - name: add remote host to inventory
     add_host:
       name: raspi
-      ansible_host: "{{ remote_host }}"
-      ansible_user: root
+      ansible_host: "{{ ansible_host }}"
+      ansible_user: "{{ account.username }}"
       ansible_ssh_common_args: '-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+    when: user_reachable is changed
 
 # Copy template
 - import_playbook: setup/template.yml
 
 # Setup account
 - import_playbook: setup/account.yml
+  when: user_reachable is not changed
 
-# Setup SSH
+# Setup public key authentication
 - import_playbook: setup/keypair.yml
+
+# Setup SSH daemon
+- import_playbook: setup/ssh.yml

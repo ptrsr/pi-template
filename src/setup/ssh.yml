@@ -1,0 +1,29 @@
+---
+- hosts: raspi
+  gather_facts: no
+
+  tasks:
+  - name: disable root login over SSH
+    lineinfile:
+      path: /etc/ssh/sshd_config
+      regexp: '^PermitRootLogin yes'
+      line: 'PermitRootLogin no'
+      state: present
+  
+  - name: disable empty passwords over SSH
+    lineinfile:
+      path: /etc/ssh/sshd_config
+      regexp: '^#PermitEmptyPasswords yes'
+      line: 'PermitEmptyPasswords no'
+      state: present
+
+  - name: Allow key based authentication
+    lineinfile:
+      path: /etc/ssh/sshd_config
+      regexp: '^#PubkeyAuthentication yes'
+      line: 'PubkeyAuthentication yes'
+      state: present
+
+  - name: restart SSH daemon
+    become: true
+    shell: systemctl restart sshd

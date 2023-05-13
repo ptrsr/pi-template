@@ -11,7 +11,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Load Docker image
+      - name: Pull Docker image
         run: docker pull $PI_CI
 
       - name: Install dependencies
@@ -21,7 +21,7 @@ jobs:
 
       - name: Configure image
         run: |
-          ansible-playbook -v \
+          ansible-playbook \
           -i inv/ci.yml \
           src/ci.yml
 

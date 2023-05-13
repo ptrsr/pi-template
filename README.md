@@ -2,7 +2,7 @@
 A template repo for [PI-CI](https://github.com/ptrsr/pi-ci): fork me for automated RPi builds!
 
 This repository uses Github Actions to prepare Raspberry Pi images, enabling [configurations to be defined as code](https://www.redhat.com/en/topics/automation/what-is-infrastructure-as-code-iac) through Ansible.
-Every commit represents a snapshot of a RPi configuration, that can be reproduced by flashing the image on an SD card and running the included Ansible playbook (that is defined in this repo).
+Every commit represents a snapshot of a RPi configuration, which can be reproduced by flashing the image on an SD card and running the included Ansible playbook (provided in this repo).
 
 - Create images that work from first boot
 - No more need to create back-ups of SD cards
