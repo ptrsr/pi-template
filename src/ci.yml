@@ -13,7 +13,7 @@
 - import_playbook: setup/template.yml
 
 # Install Ansible
-- import_playbook: setup/ansible.yml
+- import_playbook: setup/dependencies.yml
 
 # ---------------------------
 # Stop raspi vm

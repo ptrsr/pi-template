@@ -3,10 +3,11 @@
   gather_facts: no
 
   tasks:
-  - name: install ansible
+  - name: install dependencies
     apt:
       pkg:
       - ansible
+      - mkpasswd
       state: present
       update_cache: yes
       cache_valid_time: 86400
